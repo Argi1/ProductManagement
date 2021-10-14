@@ -1,4 +1,3 @@
-CREATE DATABASE `db`;
 USE db;
 CREATE TABLE `Category` (
   `groupid` int NOT NULL AUTO_INCREMENT,
