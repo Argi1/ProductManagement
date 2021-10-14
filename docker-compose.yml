@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+
+  db:
+    image: mysql:8.0
+    restart: always
+    container_name: mysqldb
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - 3306:3306
+    expose:
+      - '3306'
+    volumes:
+      - sqldb:/var/lib/mysql   
+
+  productmanagement:
+    image: ${DOCKER_REGISTRY-}productmanagement
+    container_name: product_management
+    build:
+      context: .
+      dockerfile: ProductManagement\Dockerfile
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
+
+volumes:
+  sqldb:
