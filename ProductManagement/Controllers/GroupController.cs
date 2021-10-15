@@ -17,12 +17,11 @@ namespace ProductManagement.Controllers
             this.repository = repository;
         }
 
-        // GET /api/group/tree
         [HttpGet("tree")]
         public IEnumerable<Group> GetGroupsAsTree()
         {
             List<Group> flatGroups = repository.GetGroups().ToList();
-            foreach(var group in flatGroups)
+            foreach (var group in flatGroups)
             {
                 group.Children = flatGroups.Where(child => child.ParentId == group.Id).ToList();
             }

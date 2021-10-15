@@ -106,6 +106,14 @@ namespace ProductManagement.Controllers
             return CreatedAtAction(nameof(GetProduct), new { id = createdProductId }, GetProduct(createdProductId).Value);
         }
 
+        [HttpGet("~/api/shop/{id}/products")]
+        public IEnumerable<ProductDto> GetProductByShopId(long id)
+        {
+            var products = repository.GetProductsByShopId(id).Select(product => ProductToDTO(product));
+
+            return products;
+        }
+
         private static ProductDto ProductToDTO(Product product) =>
             new ProductDto
             {

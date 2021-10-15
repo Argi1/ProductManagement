@@ -20,8 +20,9 @@ This project uses docker to run the .net api and a MySQL database
  ### Usage
  * GET requests
   1. [http://localhost:8000/api/products](http://localhost:8000/api/products) Gets all the products
-  2. [http://localhost:8000/api/products/1](http://localhost:8000/api/products/1) Gets a certain product by its id
+  2. [http://localhost:8000/api/products/{id}](http://localhost:8000/api/products/1) Gets a certain product by its id
   3. [http://localhost:8000/api/group/tree](http://localhost:8000/api/group/tree) Get the categories in a tree view
+  4. [http://localhost:8000/api/shop/{id}/products](http://localhost:8000/api/shop/1/products) Get all the products present in a shop by the shop ID
  * POST
   1. [http://localhost:8000/api/products](http://localhost:8000/api/products) Insert a new product into the database. Post body should be in json format as shown below
   ```json

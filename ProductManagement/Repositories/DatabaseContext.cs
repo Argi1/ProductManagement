@@ -251,5 +251,49 @@ namespace ProductManagement.Repositories
             }
             return shop;
         }
+
+        public IEnumerable<Product> GetProductsByShopId(long id)
+        {
+            List<Product> products = new();
+
+            using (MySqlConnection connection = GetConnection())
+            {
+                connection.Open();
+
+                string query = "SELECT p.*, Shop.shopname, c.groupname FROM ProductShop as ps JOIN Product as p ON p.productid = ps.productid " +
+                    "JOIN Shop ON Shop.shopid = ps.shopid JOIN Category as c ON c.groupid = p.groupid WHERE Shop.shopid = " + id;
+
+                MySqlCommand cmd = new(query, connection);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        if (products.Any(product => product.ProductId == reader.GetInt64("productid")))
+                        {
+                            var product = products.FirstOrDefault(product => product.ProductId == reader.GetInt64("productid"));
+                            product.Shops.Add(reader.GetString("shopname"));
+                        }
+                        else
+                        {
+                            products.Add(new Product()
+                            {
+                                ProductId = reader.GetInt64("productid"),
+                                Name = reader.GetString("productname"),
+                                GroupId = reader.GetInt64("groupid"),
+                                GroupName = reader.GetString("groupname"),
+                                CreatedDate = reader.GetDateTime("createddate"),
+                                Price = reader.GetDecimal("price"),
+                                VatPrice = reader.GetDecimal("vatprice"),
+                                VatPercentage = reader.GetInt32("vatpercentage"),
+                                Shops = new List<string>() { reader.GetString("shopname") }
+                            });
+                        }
+                    }
+                }
+
+            }
+            return products;
+        }
     }
 }

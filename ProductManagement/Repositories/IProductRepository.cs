@@ -18,5 +18,7 @@ namespace ProductManagement.Repositories
         IEnumerable<Group> GetGroups();
         Shop GetShop(long id);
 
+        IEnumerable<Product> GetProductsByShopId(long id);
+
     }
 }
