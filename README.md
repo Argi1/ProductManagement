@@ -14,7 +14,7 @@ This project uses docker to run the .net api and a MySQL database
    ```
 4. Run the sql script to create a database and fill it with sample data (one time only)
    ```sh
-   docker exec -i mysqldb mysql -u user -ppassword < seed_database.sql
+   docker exec -i mysqldb mysql -u user -p password < seed_database.sql
    ```
 5. Project should now be running and accessible
  ### Usage
